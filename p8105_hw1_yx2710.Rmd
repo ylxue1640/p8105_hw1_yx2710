@@ -1,0 +1,62 @@
+---
+title: "p8105_hw1_yx2710"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+
+Problem 1
+
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+```{r}
+names(penguins)
+nrow(penguins)
+ncol(penguins)
+mean(pull(penguins,flipper_length_mm), na.rm = TRUE)
+```
+
+The penguis dataset has `r ncol(penguins)` columns and `r nrow(penguins)` rows, The names of the 8 variables are `r names(penguins)`. The mean flipper length is `r mean(pull(penguins,flipper_length_mm), na.rm = TRUE)`mm.
+
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+```
+
+```{r}
+ggsave("scatter_plot.pdf", height = 4, width = 6)
+```
+
+Problem2
+
+```{r}
+p2_df = tibble(
+  num_vec = rnorm(10),
+  logi_vec = num_vec > 0,
+  char_vec = c("data", "science","is","very","interesting","and","useful","as","well","yeah"),
+  fac_vec = factor(c("alpha","beta","omega","alpha","beta","beta","beta","omega","beta","beta"))
+)
+```
+
+```{r}
+mean(pull(p2_df, num_vec))
+mean(pull(p2_df,logi_vec))
+mean(pull(p2_df,char_vec))
+mean(pull(p2_df,fac_vec))
+```
+I tried to get the mean of each variables, and I can take the mean of numeric vector and logical but not the charactor vector and the factor vector and I only  got "returning NA"
+
+
+```{r}
+as.numeric(pull(p2_df,logi_vec))
+as.numeric(pull(p2_df,char_vec))
+as.numeric(pull(p2_df,fac_vec))
+```
+
+When I tried to convert the type of variables, I succeeded to convert logical veoctor and fanctor vector to numeric vector and got their means, however, the character vector still showed NA. We cannot take the mean of character vector.
+
